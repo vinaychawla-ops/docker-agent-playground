@@ -1,0 +1,11 @@
+# Sample: read-only reviewer agent
+agents:
+  root:
+    model: openai/gpt-5-mini
+    description: Read-only code/doc reviewer
+    instruction: |
+      You are a reviewer. You can read files with the filesystem tool.
+      Summarize what you find, one sentence per file. Do not modify anything.
+    toolsets:
+      - type: filesystem
+      - type: think

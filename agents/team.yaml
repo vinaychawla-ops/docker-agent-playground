@@ -1,0 +1,26 @@
+# Sample: multi-agent team — coordinator delegates to coder + reviewer.
+agents:
+  root:
+    model: openai/gpt-5
+    description: Team coordinator
+    instruction: |
+      Route tasks to the best specialist. Ask the coder to write or change
+      code, then ask the reviewer to check it. Report the final result.
+    sub_agents: [coder, reviewer]
+
+  coder:
+    model: anthropic/claude-sonnet-4-5
+    description: Writes and modifies code
+    instruction: Write clean, tested code. Run the tests when you change code.
+    toolsets:
+      - type: filesystem
+      - type: shell
+      - type: think
+
+  reviewer:
+    model: anthropic/claude-sonnet-4-5
+    description: Reviews code for quality
+    instruction: Review code for bugs, style, and best practices. Never modify files.
+    toolsets:
+      - type: filesystem
+      - type: think
